@@ -20,3 +20,7 @@ spec:
         volumeMounts:
         - mountPath: /locust-tasks
           name: locust-tasks
+        volumes:
+          - name: locust-tasks
+            configMap:
+              name: locust-tasks
