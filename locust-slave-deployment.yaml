@@ -16,5 +16,7 @@ spec:
       - name: locust-slave
         image: locustio/locust
         command: ["/bin/sh"]
-        args: ["-c", "locust --worker --master-host=locust-master --host=https://drm-staging.saavn.com"]
-
+        args: ["-c", "locust --worker --master-host=locust-master --host=http://your-app-url"]
+        volumeMounts:
+        - mountPath: /locust-tasks
+          name: locust-tasks
