@@ -16,7 +16,7 @@ spec:
       - name: locust-master
         image: locustio/locust
         command: ["/bin/sh"]
-        args: ["-c", "locust -f /locust-tasks/locustfile.py --master --host=http://your-app-url"]
+        args: ["-c", "locust -f /locust-tasks/locustfile.py --master --host=https://drm-staging.saavn.com"]
         volumeMounts:
         - mountPath: /locust-tasks
           name: locust-tasks
