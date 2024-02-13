@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: locust-master
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: locust-master
+  template:
+    metadata:
+      labels:
+        app: locust-master
+    spec:
+      containers:
+      - name: locust-master
+        image: locustio/locust
+        command: ["/bin/sh"]
+        args: ["-c", "locust -f /locust-tasks/locustfile.py --master --host=http://your-app-url"]
+        volumeMounts:
+        - mountPath: /locust-tasks
+          name: locust-tasks
+      volumes:
+      - name: locust-tasks
+        configMap:
+          name: locust-tasks
