@@ -1,26 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: locust-slave
+  name: locust-worker
 spec:
-  replicas: 2  # Adjust the number of replicas based on your requirements
+  replicas: 3
   selector:
     matchLabels:
-      app: locust-slave
+      app: locust-worker
   template:
     metadata:
       labels:
-        app: locust-slave
+        app: locust-worker
     spec:
-      volumes:
-      - name: locust-tasks
-        configMap:
-          name: locust-tasks
       containers:
-      - name: locust-slave
-        image: locustio/locust
-        command: ["/bin/sh"]
-        args: ["-c", "locust --worker --master-host=locust-master --host=https://drm-staging.saavn.com"]
-        volumeMounts:
-        - mountPath: /locust-tasks
-          name: locust-tasks
+      - name: locust-worker
+        image: varunregistery02.azurecr.io/locustimagevarun:latest
+        env:
+        - name: LOCUST_MODE
+          value: worker
+        - name: LOCUST_MASTER_HOST
+          value: locust-master
+        - name: LOCUST_FILE
+          value: /mnt/locustfile.py
